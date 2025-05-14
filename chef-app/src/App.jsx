@@ -8,16 +8,18 @@ function App() {
   const [ingredients, setIngredients] = React.useState(
         ["all the main spices", "pasta", "ground beef", "tomato paste"]
     )
-    const [recipeShown, setRecipeShown] = React.useState(false)
+  const [recipeShown, setRecipeShown] = React.useState(false)
 
-    function toggleRecipeShown() {
-        setRecipeShown(prevShown => !prevShown)
-    }
+  async function getRecipe() {
+        console.log("Button Clicked")
+        const recipeMarkdown = await getRecipeFromMistral(ingredients)
+        console.log(recipeMarkdown)
+  }
 
-    function addIngredient(formData) {
+  function addIngredient(formData) {
         const newIngredient = formData.get("ingredient")
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
-    }
+  }
   
 
   return (
@@ -40,7 +42,7 @@ function App() {
             {ingredients.length > 0 &&
                 <IngredientsList
                     ingredients={ingredients}
-                    toggleRecipeShown={toggleRecipeShown}
+                    getRecipe={getRecipe}
                 />
             }
 
@@ -51,3 +53,4 @@ function App() {
 }
 
 export default App
+
